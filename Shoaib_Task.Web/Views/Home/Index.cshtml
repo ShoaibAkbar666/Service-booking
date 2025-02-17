@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+<h2>Welcome to Service Booking System</h2>
+<a href="@Url.Action("Index", "Services")" class="btn btn-primary">View Services</a>
+@if (ViewBag.role == "Admin")
+{
+
+
+<a href="@Url.Action("AddService", "Services")" class="btn btn-primary">Add Service</a>
+<a href="@Url.Action("Index", "Bookings")" class="btn btn-primary">View Booking requests</a>
+<a href="@Url.Action("Index", "Users")" class="btn btn-primary">View Users</a>
+}
+<a href="@Url.Action("Login", "Auth")" class="btn btn-secondary">Logout</a>

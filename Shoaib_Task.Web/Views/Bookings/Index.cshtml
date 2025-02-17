@@ -1,0 +1,53 @@
+﻿@model List<ViewBookingModel>
+<h2>Available Services</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var service in Model)
+        {
+            <tr>
+                <td>@service.Username</td>
+                <td>@service.Servicename</td>
+                <td>@service.BookingDate</td>
+                <td>
+                    <button class="btn btn-primary" onclick="bookService(@service.Id)">Approve</button>
+                    <button class="btn btn-danger" onclick="RejectBooking(@service.Id)">Reject</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function bookService(serviceId) {
+        var token = "@ViewBag.token";
+        $.ajax({
+            url: 'https://localhost:7014/api/bookings/'+serviceId+'/approve',
+            type: 'PUT',
+            headers: { 'Authorization': 'Bearer ' + token },
+            data: null,
+            contentType: 'application/json',
+            success: function () { alert('Booking Successful'); },
+            error: function () { alert('Booking Failed'); }
+        });
+    }
+     function RejectBooking(serviceId) {
+        var token = "@ViewBag.token";
+        $.ajax({
+            url: 'https://localhost:7014/api/bookings/'+serviceId+'/reject',
+            type: 'PUT',
+            headers: { 'Authorization': 'Bearer ' + token },
+            data: null,
+            contentType: 'application/json',
+            success: function () { alert('Booking Successful'); },
+            error: function () { alert('Booking Failed'); }
+        });
+    }
+</script>

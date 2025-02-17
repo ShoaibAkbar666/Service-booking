@@ -1,0 +1,40 @@
+﻿@model List<ServiceModel>
+<h2>Available Services</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var service in Model)
+        {
+            <tr>
+                <td>@service.Name</td>
+                <td>@service.Description</td>
+                <td>@service.Price</td>
+                <td>
+                    <button class="btn btn-primary" onclick="bookService(@service.Id)">Book</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function bookService(serviceId) {
+        var token = "@ViewBag.token";
+        $.ajax({
+            url: 'https://localhost:7014/api/bookings',
+            type: 'POST',
+            headers: { 'Authorization': 'Bearer ' + token },
+            data: JSON.stringify({ ServiceId: serviceId, UserId: parseInt('@ViewBag.userid') }),
+            contentType: 'application/json',
+            success: function () { alert('Booking Successful'); },
+            error: function () { alert('Booking Failed'); }
+        });
+    }
+</script>
